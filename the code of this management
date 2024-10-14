@@ -1,0 +1,124 @@
+@app.route('/books', methods=['POST'])
+def add_book():
+    data = request.json
+    book = Book(title=data['title'], author=data['author'], isbn=data['isbn'], price=data['price'], stock=data['stock'], category=data['category'])
+    db.session.add(book)
+    db.session.commit()
+    return jsonify({'message': 'Book added successfully'}), 201
+
+@app.route('/books/<int:book_id>', methods=['PUT'])
+def update_book(book_id):
+    book = Book.query.get_or_404(book_id)
+    data = request.json
+    book.title = data.get('title', book.title)
+    book.author = data.get('author', book.author)
+    book.isbn = data.get('isbn', book.isbn)
+    book.price = data.get('price', book.price)
+    book.stock = data.get('stock', book.stock)
+    book.category = data.get('category', book.category)
+    db.session.commit()
+    return jsonify({'message': 'Book updated successfully'}), 200
+
+@app.route('/books/<int:book_id>', methods=['DELETE'])
+def delete_book(book_id):
+    book = Book.query.get_or_404(book_id)
+    db.session.delete(book)
+    db.session.commit()
+    return jsonify({'message': 'Book deleted successfully'}), 200
+
+class Book:
+    def __init__(self, title, quantity):
+        self.title = title
+        self.quantity = quantity
+
+    def __str__(self):
+        return f"Book Name：{self.title}，Quantity in Stock：{self.quantity}"
+
+
+class BookManager:
+    def __init__(self):
+        self.books = []
+
+    def add_book(self, title, quantity):
+        """Add the name of book and the number of stock"""
+        for book in self.books:
+            if book.title == title:
+                print(f"The book '{title}' already exists，and the updated inventory quantity is：{book.quantity + quantity}。")
+                book.quantity += quantity
+                return
+        new_book = Book(title, quantity)
+        self.books.append(new_book)
+        print(f"The book '{title}' has been added and the quantity in stock is：{quantity}。")
+
+    def view_books(self):
+        """Shows all current books and their inventory"""
+        if not self.books:
+            print("No book information currently available.")
+        else:
+            print("Current Book Stock List：")
+            for book in self.books:
+                print(book)
+
+    def search_book(self, title):
+        """Check the stock of a particular book by title"""
+        for book in self.books:
+            if book.title == title:
+                print(book)
+                return
+        print(f"Title '{title}' not found.")
+
+    def update_stock(self, title, quantity):
+        """Change the inventory quantity of a particular book"""
+        for book in self.books:
+            if book.title == title:
+                book.quantity = quantity
+                print(f"Stock quantity for '{title}' has been updated to：{quantity}.")
+                return
+        print(f"Title '{title}' not found and cannot updated inventory.")
+
+    def delete_book(self, title):
+        """Delete Books"""
+        for i, book in enumerate(self.books):
+            if book.title == title:
+                del self.books[i]
+                print(f"书名《{title}》已从库存中删除。")
+                return
+        print(f"书名《{title}》未找到，无法删除。")
+
+
+def main():
+    manager = BookManager()
+    while True:
+        print("\n书籍及库存管理查询系统")
+        print("1. 添加书籍")
+        print("2. 查看所有书籍")
+        print("3. 查询书籍")
+        print("4. 修改库存")
+        print("5. 删除书籍")
+        print("6. 退出系统")
+        choice = input("请选择一个操作（1-6）：")
+
+        if choice == '1':
+            title = input("请输入书名：")
+            quantity = int(input("请输入库存数量："))
+            manager.add_book(title, quantity)
+        elif choice == '2':
+            manager.view_books()
+        elif choice == '3':
+            title = input("请输入书名：")
+            manager.search_book(title)
+        elif choice == '4':
+            title = input("请输入书名：")
+            quantity = int(input("请输入新的库存数量："))
+            manager.update_stock(title, quantity)
+        elif choice == '5':
+            title = input("请输入书名：")
+            manager.delete_book(title)
+        elif choice == '6':
+            print("感谢使用书籍及库存管理查询系统。再见！")
+            break
+        else:
+            print("无效的选择，请重新输入。")
+
+if __name__ == "__main__":
+    main()
