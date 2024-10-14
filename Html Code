@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线书店</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .menu {
+            display: flex;
+            justify-content: center;
+            background-color: #ddd;
+            padding: 10px 0;
+        }
+        .menu a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 20px;
+        }
+        .menu a:hover {
+            background-color: #ccc;
+        }
+        .book-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .book {
+            background-color: #fff;
+            margin: 10px;
+            padding: 20px;
+            width: calc(33% - 20px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .book img {
+            max-width: 100%;
+            height: auto;
+        }
+        .book h3 {
+            color: #333;
+        }
+        .book p {
+            color: #666;
+        }
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 20px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>欢迎来到薪火书屋</h1>
+    </div>
+    <div class="menu">
+        <a href="#">首页</a>
+        <a href="#">图书分类</a>
+        <a href="#">畅销书</a>
+        <a href="#">新书推荐</a>
+        <a href="#">关于我们</a>
+    </div>
+    <div class="book-list">
+        <!-- 书籍列表 -->
+        <div class="book">
+            <img src="book1.jpg" alt="书籍封面">
+            <h3>书籍标题1</h3>
+            <p>书籍描述...</p>
+        </div>
+        <!-- 更多书籍 -->
+    </div>
+    <div class="footer">
+        <p>版权所有 © 2024 在线书店</p>
+    </div>
+</body>
+</html>
