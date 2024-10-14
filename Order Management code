@@ -1,0 +1,18 @@
+@app.route('/orders', methods=['POST'])
+def create_order():
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'message': 'User not logged in'}), 401
+    data = request.json
+    order = Order(user_id=user_id, book_id=data['book_id'], quantity=data['quantity'])
+    db.session.add(order)
+    db.session.commit()
+    return jsonify({'message': 'Order created successfully'}), 201
+
+@app.route('/orders/<int:order_id>', methods=['PUT'])
+def update_order(order_id):
+    order = Order.query.get_or_404(order_id)
+    data = request.json
+    order.status = data.get('status', order.status)
+    db.session.commit()
+    return jsonify({'message': 'Order updated successfully'}), 200
