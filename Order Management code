@@ -1,4 +1,4 @@
-@app.route('/orders', methods=['POST'])
+@app.route('/orders', methods=['POST']).
 def create_order():
     user_id = session.get('user_id')
     if not user_id:
