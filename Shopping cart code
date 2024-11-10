@@ -1,4 +1,4 @@
-@app.route('/cart', methods=['POST'])
+@app.route('/cart', methods=['POST']).
 def add_to_cart():
     user_id = session.get('user_id')
     if not user_id:
